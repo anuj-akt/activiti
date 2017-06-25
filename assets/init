@@ -3,7 +3,7 @@
 # It looks at the various environment variables and updates the database configuration as appropriate.
 #
 # DB_TYPE must be supplied as an environment variable if you want to use something other than the in-memory DB.
-# e.g. docker run -d --link activiti-psql:bpmdb -e "DB_TYPE=postgres" cwoodcock/activiti
+# e.g. docker run -d --link activiti-psql:bpmdb -e "DB_TYPE=postgres" anujakt/activiti:5.22.0
 #
 # When linking the database, it must be set as "bpmdb" otherwise this script will break.
 #

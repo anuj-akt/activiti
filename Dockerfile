@@ -2,13 +2,13 @@
 # Activiti Dockerfile
 #
 FROM java:7u79-jdk
-MAINTAINER Colin Woodcock "colin.woodcock@gmail.com"
+MAINTAINER Anuj Kumar "anuj.akt@gmail.com"
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
 EXPOSE 8080
 
 ENV TOMCAT_VERSION 8.0.24
-ENV ACTIVITI_VERSION 5.18.0
+ENV ACTIVITI_VERSION 5.22.0
 
 # Fetch and explode distributions
 RUN \
