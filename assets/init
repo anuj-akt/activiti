@@ -56,6 +56,8 @@ function configure_postgres() {
   BPMDB_PORT_5432_TCP_PORT=${BPMDB_PORT_5432_TCP_PORT:-5432}     # use 5432 as default port
   BPMDB_ENV_POSTGRES_USER=${BPMDB_ENV_POSTGRES_USER:-postgres}  # postgres is the default user
 
+  ACTIVATE_ASYNC_EXECUTOR=${ACTIVATE_ASYNC_EXECUTOR:-true}  # activiti engine's async executor is activated by default
+
   DB_HOST=${DB_HOST:-${BPMDB_PORT_5432_TCP_ADDR}}
   DB_PORT=${DB_PORT:-${BPMDB_PORT_5432_TCP_PORT}}
   DB_USER=${DB_USER:-${BPMDB_ENV_POSTGRES_USER}}
@@ -73,6 +75,13 @@ function update_db_properties() {
   sed 's/{{DB_TYPE}}/'"${DB_TYPE}"'/g' -i /assets/config/db.properties
   cp -f /assets/config/db.properties /opt/tomcat/webapps/activiti-rest/WEB-INF/classes
   cp -f /assets/config/db.properties /opt/tomcat/webapps/activiti-explorer/WEB-INF/classes
+}
+
+# This performs variable substitution on the engine.properties file then copies into both the REST and explorer apps
+function update_engine_properties() {
+  sed 's/{{ACTIVATE_ASYNC_EXECUTOR}}/'"${ACTIVATE_ASYNC_EXECUTOR}"'/g' -i /assets/config/explorer/engine.properties
+  cp -f /assets/config/explorer/engine.properties /opt/tomcat/webapps/activiti-rest/WEB-INF/classes
+  cp -f /assets/config/explorer/engine.properties /opt/tomcat/webapps/activiti-explorer/WEB-INF/classes
 }
 
 # configure tomcat admin user/password
@@ -96,5 +105,6 @@ esac
 
 sanity_check
 update_db_properties
+update_engine_properties
 
 /opt/tomcat/bin/catalina.sh run
